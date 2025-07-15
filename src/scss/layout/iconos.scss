@@ -1,0 +1,18 @@
+@include tablet{
+    //Sólo se alpica el grid con columnas y separación en ese tamaño de pantalla
+    .iconos-nosotros{
+        @include grid(3, 2rem);
+    }
+}
+
+
+.icono{
+    text-align: center;
+    img{
+        height: 10rem;
+    }
+
+    h3{
+        text-transform: uppercase;
+    }
+}
