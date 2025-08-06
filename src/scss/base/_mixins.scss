@@ -32,8 +32,10 @@
     margin-top: $separacion * .5;
     //Toma todo el espacio disponible (display: block)
     display: $display;
+    border: none;
 
     &:hover {
         background-color: darken($bgColor, 5);
+        cursor: pointer;
     }
 }
