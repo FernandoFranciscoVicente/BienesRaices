@@ -16,7 +16,7 @@
         display: block;
     }
 
-    //Seleccionar todos los input que no sean tipo texto
+    //Seleccionar todos los input QUE NO SEAN TIPO SUBMIT
     input:not([type="submit"]),
     textarea,
     select {
