@@ -11,6 +11,24 @@
     require '../../includes/funciones.php';
     incluirTemplate('header');
 
+    //Superglobales POST
+    echo "<pre>";
+    var_dump($_POST);
+    echo "</pre>";
+
+    echo "<pre>";
+    var_dump($_SERVER['REQUEST_METHOD']);
+    echo "</pre>";
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        echo "<pre>";
+        var_dump($_POST['titulo']);
+        echo "</pre>";
+
+        $titulo = $_POST['titulo'];
+    }
+
+
 ?>
 
     <main class="contenedor seccion">
@@ -18,16 +36,17 @@
         <a href="/admin" class="boton boton-verde">Volver</a>
 
 <!--Formulario para instertar datos a la BD-->
-        <form class="formulario">
+        <!--Todo lo que se registre en esa página va a ser procesado por el mismo archivo-->
+        <form class="formulario" method="POST" action="/admin/propiedades/crear.php">
             <fieldset>
                 <legend>Información general</legend>
 
                 <!--El id del input debe ser el mismo for que label-->
                 <label for="titulo">Titulo:</label>
-                <input type="text" id="titulo" placeholder="Titulo de la Propiedad">
+                <input type="text" id="titulo" name="titulo" placeholder="Titulo de la Propiedad">
 
                 <label for="precio">Precio:</label>
-                <input type="number" id="precio" placeholder="Precio de la propiedad">
+                <input type="number" id="precio" name="precio" placeholder="Precio de la propiedad">
                 
                 <!--La interfaz para seleccionar el archivo dependerá del navegador, pues
                 usará de forma nativa-->
