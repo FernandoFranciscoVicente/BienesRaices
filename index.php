@@ -1,45 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="build/css/app.css">
+<?php 
 
-</head>
-<body>
-    <!--Aplicamos una segunda clase para establecer reglas cuando AMBAS estén presentes-->
-    <header class="header inicio">
-        <div class="contenedor contenido-header">
-            <div class="barra">
-                <a href="/">
-                    <img src="build/img/logo.svg" alt="imagen del logo">
-                </a>
+//incluye NECESARIAMENTE el archivo funciones.php para cargar
+require 'includes/funciones.php';
 
-                <!--Menú hamburguesa-->
-                <div class="mobile-menu">
-                    <img src="build/img/barras.svg" alt="icono menu responsivo">
-                </div>
+//Esta función $inicio sólo iniciará como true en index
+incluirTemplate('header', $inicio = true);
 
-                <!--Botón Dark mode-->
-                <div class="derecha">
-                    <img class="dark-mode-boton" src="build/img/dark-mode.svg" alt="boton dark mode">
-                    <nav class="navegacion">
-                        <a href="nosotros.html">Nosotros</a>
-                        <a href="anuncios.html">Anuncios</a>
-                        <a href="blog.html">Blog</a>
-                        <a href="contacto.html">Contacto</a>
-                    </nav>
-                </div>
+?>
 
-            </div> <!--.barra-->
-
-
-            <h1>
-                Venta de casas y Departamentos exclusivos de lujo
-            </h1>
-        </div>
-    </header>
 
     <main class="contenedor">
         <h1>Más sobre Nosotros</h1>
@@ -93,7 +61,7 @@
                         </li>
                     </ul>
                     <!--Botón de ver detalles de propiedad-->
-                    <a class="boton-amarillo-block" href="anuncios.html">Ver Propiedad</a>
+                    <a class="boton-amarillo-block" href="anuncios.php">Ver Propiedad</a>
 
                 </div> <!--.contenido-anuncio-->
             </div><!--.anuncio-->
@@ -124,7 +92,7 @@
                         </li>
                     </ul>
                     <!--Botón de ver detalles de propiedad-->
-                    <a class="boton-amarillo-block" href="anuncios.html">Ver Propiedad</a>
+                    <a class="boton-amarillo-block" href="anuncios.php">Ver Propiedad</a>
 
                 </div>
             </div>
@@ -155,14 +123,14 @@
                         </li>
                     </ul>
                     <!--Botón de ver detalles de propiedad-->
-                    <a class="boton-amarillo-block" href="anuncios.html">Ver Propiedad</a>
+                    <a class="boton-amarillo-block" href="anuncios.php">Ver Propiedad</a>
 
                 </div>
             </div>
         </div> <!--.contenedor-anuncios-->
 
         <div class="alinear-derecha">
-            <a class="boton-verde" href="anuncios.html">Ver todas</a>
+            <a class="boton-verde" href="anuncios.php">Ver todas</a>
         </div>
 
     </section>
@@ -170,7 +138,7 @@
     <section class="imagen-contacto">
         <h2>Encuentra la casa de tus sueños</h2>
         <p>Llena el formulario de contacto y un asesor se pondrá en contacto contigo a la brevedad</p>
-        <a class="boton-amarillo" href="contacto.html">Contáctanos</a>
+        <a class="boton-amarillo" href="contacto.php">Contáctanos</a>
     </section>
 
     <!--Blog-->
@@ -188,7 +156,7 @@
                 </div>
 
                 <div class="texto-entrada">
-                    <a href="entrada.html">
+                    <a href="entrada.php">
                         <h4>Terraza en el techo de tu casa</h4>
                         <p class="informacion-meta">Escrito el: <span>20/06/2025</span> por: <span>Admin</span></p>
                         <p>
@@ -207,7 +175,7 @@
                 </div>
 
                 <div class="texto-entrada">
-                    <a href="entrada.html">
+                    <a href="entrada.php">
                         <h4>Guía para la decoración de tu hogar</h4>
                         <p class="informacion-meta">Escrito el: <span>20/06/2025</span> por: <span>Admin</span></p>
                         <p>
@@ -226,7 +194,7 @@
                 </div>
 
                 <div class="texto-entrada">
-                    <a href="entrada.html">
+                    <a href="entrada.php">
                         <h4>La importancia de la iluminación de espacios en el hogar</h4>
                         <p class="informacion-meta">Escrito el: <span>20/06/2025</span> por: <span>Admin</span></p>
                         <p>
@@ -251,19 +219,7 @@
     </div>
 
 
-    <footer class="footer seccion">
-        <div class="contenedor contenedor-footer">
-            <nav class="navegacion">
-                <a href="nosotros.html">Nosotros</a>
-                <a href="anuncios.html">Anuncios</a>
-                <a href="blog.html">Blog</a>
-                <a href="contacto.html">Contacto</a>
-            </nav>
-        </div>
-        <p class="copyright">Todos los derechos Reservados 2025 &copy;</p>
-    </footer>
-
-
-    <script src="build/js/bundle.min.js"></script>
-</body>
-</html>
+<!--footer desde php-->
+<?php 
+    incluirTemplate('footer');
+?>
