@@ -28,9 +28,9 @@
     //Ejecutar el código después de que el usuario envíe el formulario
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
-        //echo "<pre>";
-        //var_dump($_POST);
-        //echo "</pre>";
+        echo "<pre>";
+        var_dump($_FILES);
+        echo "</pre>";
 
 
         //Leer las variables y sanitizarlas
@@ -43,6 +43,9 @@
         $estacionamiento = mysqli_real_escape_string( $db, $_POST['estacionamiento']);
         $vendedorId = mysqli_real_escape_string( $db, $_POST['vendedor']);
         $creado = ('Y/m/d');
+
+        //Asignar FILES hacia una variable
+        $imagen = $_FILES['imagen'];
 
 
         // -- Validaciones para insertar propiedades en la BD --
@@ -75,6 +78,17 @@
 
         if(!$vendedorId){
             $errores[] = "Elige un vendedor";
+        }
+
+        if(!$imagen['name'] || $imagen['error'] ){
+            $errores[] = "La imagen es Obligatoria";
+        }
+
+        //Validar imagenes por tamaño (100 kb máximo)
+        $medida = 1000 * 100;
+
+        if($imagen['size'] > $medida){
+            $errores[] = "La imagen es muy pesada";
         }
 
 
@@ -120,7 +134,7 @@
 
 <!--Formulario para instertar datos a la BD-->
         <!--Todo lo que se registre en esa página va a ser procesado por el mismo archivo-->
-        <form class="formulario" method="POST" action="/admin/propiedades/crear.php">
+        <form class="formulario" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
             <fieldset>
                 <legend>Información general</legend>
 
@@ -134,7 +148,7 @@
                 <!--La interfaz para seleccionar el archivo dependerá del navegador, pues
                 usará de forma nativa-->
                 <label for="imagen">Imagen:</label>
-                <input type="file" id="imagen" accept="image/jpeg, image/png">
+                <input type="file" id="imagen" accept="image/jpeg, image/png" name="imagen">
 
                 <label for="descripcion">Descripción</label>
                 <textarea id="descripcion" name="descripcion"><?php echo $descripcion; ?></textarea>
