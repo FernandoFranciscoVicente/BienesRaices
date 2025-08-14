@@ -27,19 +27,22 @@
 
     //Ejecutar el código después de que el usuario envíe el formulario
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
         //echo "<pre>";
         //var_dump($_POST);
         //echo "</pre>";
 
-        //Leer las variables
 
-        $titulo = $_POST['titulo'];
-        $precio = $_POST['precio'];
-        $descripcion = $_POST['descripcion'];
-        $habitaciones = $_POST['habitaciones'];
-        $wc = $_POST['wc'];
-        $estacionamiento = $_POST['estacionamiento'];
-        $vendedorId = $_POST['vendedor'];
+        //Leer las variables y sanitizarlas
+
+        $titulo = mysqli_real_escape_string( $db, $_POST['titulo']);
+        $precio = mysqli_real_escape_string( $db, $_POST['precio']);
+        $descripcion = mysqli_real_escape_string( $db, $_POST['descripcion']);
+        $habitaciones = mysqli_real_escape_string( $db, $_POST['habitaciones']);
+        $wc = mysqli_real_escape_string( $db, $_POST['wc']);
+        $estacionamiento = mysqli_real_escape_string( $db, $_POST['estacionamiento']);
+        $vendedorId = mysqli_real_escape_string( $db, $_POST['vendedor']);
+        $creado = ('Y/m/d');
 
 
         // -- Validaciones para insertar propiedades en la BD --
@@ -78,7 +81,7 @@
         // -- Revisar que el arreglo de errores esté vacío --
         if(empty($errores)){
             //Insertar en la base de datos
-            $query = " INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, vendedores_id) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$vendedorId')";
+            $query = " INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_id) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado' , '$vendedorId')";
             
             //echo $query;
 
@@ -86,7 +89,9 @@
             $resultado = mysqli_query($db, $query);
 
             if($resultado){
-                echo "Instertado correctamente";
+                //Redireccionar al usuario
+
+                header('Location: /admin');
             }
             else{
                 echo "No sé porque no está sucediendo nada";
@@ -154,8 +159,10 @@
                 <select name="vendedor" >
                     <option value="">--Seleccione--</option>
                 <!-- Se ejecutará mientras siga habiendo resultados en la BD-->
-                    <?php while ($vendedor = mysqli_fetch_assoc($resultado)): ?>
-                        <option value="<?php echo $vendedor['id']; ?>"> <?php echo $vendedor['nombre'] . " " . $vendedor['apellido'] ?></option>
+                    <?php while ($vendedor = mysqli_fetch_assoc($resultado)) : ?>
+                        <!--Operador ternario (if en una sola línea)-->
+                        <option <?php echo $vendedorId === $vendedor['id'] ? 'selected' : ''; ?> value="<?php echo $vendedor['id']; ?>">
+                        <?php echo $vendedor['nombre'] . " " . $vendedor['apellido']; ?></option>
 
                     <?php endwhile; ?>
                 </select>
