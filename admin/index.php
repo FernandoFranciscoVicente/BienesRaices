@@ -1,11 +1,19 @@
 <?php
 
+    //Añadir placeholder con '??'
+
+    $resultado = $_GET['resultado'] ?? null;
+
     require '../includes/funciones.php';
     incluirTemplate('header');
 ?>
 
     <main class="contenedor seccion">
         <h1>Administrador de Bienes Raíces</h1>
+        <!--Convertir un string a un entero-->
+        <?php if(intval( $resultado) === 1): ?>
+            <p class="alerta exito">Anuncio creado correctamente</p>
+        <?php endif; ?>
 
         <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva Propiedad</a>
     </main>

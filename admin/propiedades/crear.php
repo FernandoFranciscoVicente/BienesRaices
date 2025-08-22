@@ -42,7 +42,8 @@
         $wc = mysqli_real_escape_string( $db, $_POST['wc']);
         $estacionamiento = mysqli_real_escape_string( $db, $_POST['estacionamiento']);
         $vendedorId = mysqli_real_escape_string( $db, $_POST['vendedor']);
-        $creado = ('Y/m/d');
+        $creado = date('Y/m/d');
+
 
         //Asignar FILES hacia una variable
         $imagen = $_FILES['imagen'];
@@ -84,8 +85,8 @@
             $errores[] = "La imagen es Obligatoria";
         }
 
-        //Validar imagenes por tamaño (100 kb máximo)
-        $medida = 1000 * 100;
+        //Validar imagenes por tamaño (1 MB máximo)
+        $medida = 1000 * 1000;
 
         if($imagen['size'] > $medida){
             $errores[] = "La imagen es muy pesada";
@@ -94,8 +95,32 @@
 
         // -- Revisar que el arreglo de errores esté vacío --
         if(empty($errores)){
+
+
+
+            /**SUBIDA DE ARCHIVOS**/
+
+            //Crear carpeta en la raíz del proyecto
+            $carpetaImagenes = '../../imagenes/';
+
+            //Verficar si existe la carpeta, sino la crea
+            if(!is_dir($carpetaImagenes)){
+                //Cuando se cunpla que no haya errores, entonces crea la carpeta
+                mkdir($carpetaImagenes);
+
+            }
+
+            //Gemerar un nombre único
+            //Genera números aleatorios pero no tiene relación con la seguirdad
+            $nombreImagen = md5(uniqid(rand(), true));
+
+            //Subir imagen
+            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen . ".jpg");
+
+
+
             //Insertar en la base de datos
-            $query = " INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_id) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado' , '$vendedorId')";
+            $query = " INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_id) VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado' , '$vendedorId')";
             
             //echo $query;
 
@@ -105,7 +130,7 @@
             if($resultado){
                 //Redireccionar al usuario
 
-                header('Location: /admin');
+                header('Location: /admin?resultado=1');
             }
             else{
                 echo "No sé porque no está sucediendo nada";
